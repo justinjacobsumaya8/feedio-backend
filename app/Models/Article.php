@@ -50,6 +50,7 @@ class Article extends Model
                 )
                     ->leftJoin('authors', 'authors.id', 'article_authors.author_id');
             }])
-            ->with('articleBodies');
+            ->with('articleBodies')
+            ->orderBy("published_at", "desc");
     }
 }

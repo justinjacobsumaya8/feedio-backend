@@ -54,6 +54,7 @@ class FetchNewsApiCommand extends Command
 
         foreach ($articles as $data) {
             if (!$data['description']) {
+                $bar->advance();
                 continue;
             }
 

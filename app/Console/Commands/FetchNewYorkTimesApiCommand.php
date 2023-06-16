@@ -27,7 +27,7 @@ class FetchNewYorkTimesApiCommand extends Command
 
         Adventure Sports, Arts, Business, Jobs, etc.
     */
-    const NEWS_DESK_VALUE = "World";
+    const NEWS_DESK_VALUE = "Arts";
 
     const PAGE = 1;
 
@@ -53,6 +53,11 @@ class FetchNewYorkTimesApiCommand extends Command
         $bar->start();
 
         foreach ($articles as $data) {
+            if (!$data['source'] || !$data['byline']['original']) {
+                $bar->advance();
+                continue;
+            }
+
             $article = Article::where('web_url', $data['web_url'])->first();
             if (!$article) {
                 $article = new Article();
@@ -82,7 +87,7 @@ class FetchNewYorkTimesApiCommand extends Command
             ]);
 
             $author = Author::firstOrCreate([
-                'name' => $data['byline']['original'],
+                'name' => preg_replace('/^By /', '', $data['byline']['original']),
                 'data_source_id' => DataSource::THE_NEW_YORK_TIMES_ID
             ]);
 

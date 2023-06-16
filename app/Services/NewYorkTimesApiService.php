@@ -10,7 +10,7 @@ class NewYorkTimesApiService
     public $apiDomain = "https://api.nytimes.com";
     protected $apiKey = "PGlsKdA3oCfTOVDRjuM6Ixexz9bPxviM";
 
-    public function getArticles(int $page = 1, string $newsDesk): array
+    public function getArticles(int $page = 1, string $newsDesk = "Business"): array
     {
         try {
             $request = Http::get("{$this->apiDomain}/svc/search/v2/articlesearch.json", [
